@@ -180,17 +180,63 @@ Dificultad: media-alta.
 
 Escena de Unity: pendiente de definir.
 ## 8. Personajes y enemigos
+El jugador controlará a un personaje de estética medieval fantástica, representado mediante sprites pixel art y animaciones de movimiento, combate e interacción.
 
+El protagonista podrá desplazarse por los escenarios, saltar, combatir con espada y utilizar habilidades mágicas. También contará con una barra de vida que le permitirá recibir varios golpes antes de ser derrotado.
+
+En los niveles habrá una rana que funcionará como tutorial andante explicando cosas al jugador.
+
+Los enemigos serán lo más variado posible: magos, monstruos, ogros... Y se irán introduciendo de manera gradual.
 ## 9. Interfaz y flujo de pantallas
 
 ### Diagrama de flujo
+Menú principal
 
+Jugar: inicia la partida.
+Opciones: abre la configuración.
+Créditos: muestra el autor y los recursos de terceros utilizados.
+Salir: cierra el juego.
+
+Durante la partida:
+
+Pausa: detiene temporalmente el juego y muestra el menú correspondiente.
+Continuar: reanuda la partida.
+Opciones: permite modificar la configuración.
+Volver al menú principal: regresa al menú inicial.
+
+Al finalizar la partida:
+
+Victoria: aparece al completar el juego.
+Derrota: aparece cuando el protagonista pierde toda su salud.
+Volver a jugar: permite reiniciar la partida o el nivel, según se decida durante el desarrollo.
+
+Menú principal: regresa al menú inicial.
 ### HUD
+Barra de vida: mostrará la salud restante del protagonista y permitirá identificar cuándo está cerca de ser derrotado.
 
+Indicaciones de interacción: mostrarán, cuando sea necesario, qué tecla debe utilizarse para activar mecanismos o interactuar con elementos del escenario.
+
+Avisos puntuales: podrán utilizarse para ofrecer instrucciones breves durante el aprendizaje de las mecánicas
 ### Menús
+Menú de opciones
 
+Estará disponible tanto desde el menú principal como desde el menú de pausa. Permitirá modificar el volumen de la música y el de los efectos de sonido de manera independiente.
+
+Los cambios se aplicarán inmediatamente y los valores se conservarán al cambiar de escena.
+
+Se valorará incorporar otras opciones si el tiempo de desarrollo lo permite.
+
+Pantalla de victoria
+
+Aparecerá al completar el último nivel. Indicará que el jugador ha terminado el juego y permitirá volver a jugar o regresar al menú principal.
+
+Pantalla de derrota
+
+Aparecerá cuando el protagonista pierda toda su salud. Permitirá volver a jugar o regresar al menú principal.
 ## 10. Dirección de arte
+El juego utilizará una estética 2D de pixel art, con una ambientación de fantasía medieval oscura. Se buscará transmitir misticismo, calma y curiosidad mediante escenarios antiguos, ruinas, cavernas y construcciones abandonadas que sugieran la existencia de una historia oculta.
 
+El protagonista utilizará sprites pixel art con animaciones de movimiento, combate y habilidades mágicas. Los escenarios se construirán principalmente mediante recursos gráficos de terceros, seleccionados por su compatibilidad con la ambientación y el estilo del personaje.
 ## 11. Sonido y música
 
 ## 12. Efectos visuales y game feel
