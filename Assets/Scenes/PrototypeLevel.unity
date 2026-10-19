@@ -395,6 +395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovimientoJugador
   velocidad: 5
+  velocidadCarrera: 5
+  velocidadSlide: 9
 --- !u!70 &1741738935
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -535,7 +537,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 0.23, y: 0.29}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
