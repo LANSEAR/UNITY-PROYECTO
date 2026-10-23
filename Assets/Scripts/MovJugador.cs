@@ -17,7 +17,7 @@ public class MovimientoJugador : MonoBehaviour
     public LayerMask capaSuelo;
 
     [Header("Ataque")]
-    public string estadoAtaqueDerecha = "MainAttack1";
+    public string estadoAtaqueDerecha = "MainAttack";
     public string estadoAtaqueIzquierda = "";
 
     private Rigidbody2D rb;
@@ -171,8 +171,9 @@ public class MovimientoJugador : MonoBehaviour
         animator.SetBool("EnSuelo", enSuelo);
     }
 
-    void TerminarAtaque()
+    public void TerminarAtaque()
     {
+        Debug.Log("FIN DEL ATAQUE");
         atacando = false;
         ataqueIniciado = false;
         animator.SetBool("Atacando", false);

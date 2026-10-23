@@ -434,7 +434,7 @@ MonoBehaviour:
   capaSuelo:
     serializedVersion: 2
     m_Bits: 8
-  estadoAtaqueDerecha: MainAttack1
+  estadoAtaqueDerecha: MainAttack
   estadoAtaqueIzquierda: LeftAttack
 --- !u!70 &1741738935
 CapsuleCollider2D:
