@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class MovimientoJugador : MonoBehaviour
@@ -18,7 +17,7 @@ public class MovimientoJugador : MonoBehaviour
 
     [Header("Ataque")]
     public string estadoAtaqueDerecha = "MainAttack";
-    public string estadoAtaqueIzquierda = "";
+    public string estadoAtaqueIzquierda = "LeftAttack1";
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -56,7 +55,6 @@ public class MovimientoJugador : MonoBehaviour
         if (rb == null || animator == null)
             return;
 
-        // Leer el movimiento horizontal
         movimientoHorizontal = Input.GetAxisRaw("Horizontal");
 
         if (movimientoHorizontal < 0)
@@ -64,24 +62,20 @@ public class MovimientoJugador : MonoBehaviour
         else if (movimientoHorizontal > 0)
             direccion = 1f;
 
-        // Correr mientras se mantiene Shift y hay movimiento
         corriendo =
             (Input.GetKey(KeyCode.LeftShift) ||
              Input.GetKey(KeyCode.RightShift))
             && Mathf.Abs(movimientoHorizontal) > 0;
 
-        // Agacharse
         agachado = Input.GetKey(KeyCode.S) ||
                    Input.GetKey(KeyCode.DownArrow);
 
-        // Deslizarse solo mientras se corre
         bool controlPulsado =
             Input.GetKey(KeyCode.LeftControl) ||
             Input.GetKey(KeyCode.RightControl);
 
         deslizando = corriendo && controlPulsado;
 
-        // Detectar el suelo
         enSuelo = false;
 
         if (comprobadorSuelo != null)
@@ -93,11 +87,9 @@ public class MovimientoJugador : MonoBehaviour
             );
         }
 
-        // Restablecer el salto al aterrizar
         if (enSuelo && rb.linearVelocity.y <= 0.01f)
             saltando = false;
 
-        // Saltar con Espacio
         if (Input.GetKeyDown(KeyCode.Space) &&
             enSuelo && !agachado && !deslizando && !atacando)
         {
@@ -109,15 +101,16 @@ public class MovimientoJugador : MonoBehaviour
             );
         }
 
-        // Iniciar ataque con clic izquierdo
+        // Ataque con clic izquierdo del ratón
         if (Input.GetMouseButtonDown(0) && !atacando)
         {
             string nombreAtaque =
-                direccion < 0 && !string.IsNullOrEmpty(estadoAtaqueIzquierda)
+                direccion < 0
                 ? estadoAtaqueIzquierda
                 : estadoAtaqueDerecha;
 
-            hashAtaqueActual = Animator.StringToHash(nombreAtaque);
+            string rutaEstado = "Base Layer." + nombreAtaque;
+            hashAtaqueActual = Animator.StringToHash(rutaEstado);
 
             if (animator.HasState(0, hashAtaqueActual))
             {
@@ -130,12 +123,13 @@ public class MovimientoJugador : MonoBehaviour
             else
             {
                 Debug.LogWarning(
-                    "No se encuentra el estado de ataque: " + nombreAtaque
+                    "No se encuentra el estado de ataque: "
+                    + rutaEstado
                 );
             }
         }
 
-        // Detectar el final del ataque
+        // Detectar cuándo termina el ataque
         if (atacando)
         {
             AnimatorStateInfo estado =
@@ -146,18 +140,14 @@ public class MovimientoJugador : MonoBehaviour
                 ataqueIniciado = true;
 
                 if (estado.normalizedTime >= 1f)
-                {
                     TerminarAtaque();
-                }
             }
             else if (ataqueIniciado)
             {
-                // Si el Animator ya salió del ataque, liberar el bloqueo
                 TerminarAtaque();
             }
         }
 
-        // Actualizar parámetros del Animator
         animator.SetFloat(
             "Velocidad",
             Mathf.Abs(movimientoHorizontal)
@@ -173,7 +163,6 @@ public class MovimientoJugador : MonoBehaviour
 
     public void TerminarAtaque()
     {
-        Debug.Log("FIN DEL ATAQUE");
         atacando = false;
         ataqueIniciado = false;
         animator.SetBool("Atacando", false);
@@ -197,7 +186,6 @@ public class MovimientoJugador : MonoBehaviour
             ? direccion
             : movimientoHorizontal;
 
-        // Detener el movimiento horizontal durante el ataque
         if (atacando)
             movimiento = 0f;
 
