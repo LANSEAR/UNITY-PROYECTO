@@ -435,7 +435,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   estadoAtaqueDerecha: MainAttack
-  estadoAtaqueIzquierda: LeftAttack
+  estadoAtaqueIzquierda: LeftAttack1
 --- !u!70 &1741738935
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

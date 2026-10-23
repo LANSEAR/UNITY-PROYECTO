@@ -21,10 +21,14 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 5579429307240369121, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
-    - time: 0.083333336
       value: {fileID: -5678495244171947721, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
+    - time: 0
+      value: {fileID: 7141745370664080770, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
+    - time: 0.083333336
+      value: {fileID: 5579429307240369121, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
     - time: 0.16666667
+      value: {fileID: -5678495244171947721, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
+    - time: 0.25
       value: {fileID: 7141745370664080770, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
     - time: 0.25
       value: {fileID: 6160499520136393731, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
@@ -55,6 +59,8 @@ AnimationClip:
       isSerializeReferenceCurve: 0
       metaData: 0
     pptrCurveMapping:
+    - {fileID: -5678495244171947721, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
+    - {fileID: 7141745370664080770, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
     - {fileID: 5579429307240369121, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
     - {fileID: -5678495244171947721, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
     - {fileID: 7141745370664080770, guid: a68dbd4783dcd694887dbdbbdb43fabc, type: 3}
@@ -85,4 +91,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.33333334
+    functionName: TerminarAtaque
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
