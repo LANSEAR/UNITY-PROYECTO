@@ -34,6 +34,8 @@ public class MovimientoJugador : MonoBehaviour
     private bool saltando;
     private bool atacando;
 
+    private bool bloqueando;
+
     private bool comboSolicitado;
     private bool segundoAtaque;
     private bool ataqueIniciado;
@@ -74,6 +76,9 @@ public class MovimientoJugador : MonoBehaviour
 
         agachado = Input.GetKey(KeyCode.S) ||
                    Input.GetKey(KeyCode.DownArrow);
+
+        bloqueando = Input.GetKey(KeyCode.F);
+        animator.SetBool("Bloqueando", bloqueando);
 
         bool controlPulsado =
             Input.GetKey(KeyCode.LeftControl) ||

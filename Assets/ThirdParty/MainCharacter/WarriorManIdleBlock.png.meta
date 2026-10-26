@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 69121ad8e5bcc4c4abae7d43b49c7a33
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7261306899817677302
+    second: WarriorManIdleBlock_0
+  - first:
+      213: 3696508466369549328
+    second: WarriorManIdleBlock_1
+  - first:
+      213: -1572319309709975865
+    second: WarriorManIdleBlock_2
+  - first:
+      213: -8171041855685871537
+    second: WarriorManIdleBlock_3
+  - first:
+      213: 6456124759048441283
+    second: WarriorManIdleBlock_4
+  - first:
+      213: -4166868104652393091
+    second: WarriorManIdleBlock_5
+  - first:
+      213: -7972607545052485909
+    second: WarriorManIdleBlock_6
+  - first:
+      213: 4866627449788011510
+    second: WarriorManIdleBlock_7
+  - first:
+      213: 8800344144155906105
+    second: WarriorManIdleBlock_8
+  - first:
+      213: -1943169966611085343
+    second: WarriorManIdleBlock_9
+  - first:
+      213: -8698748248925633169
+    second: WarriorManIdleBlock_10
+  - first:
+      213: -2675845500802151734
+    second: WarriorManIdleBlock_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 15
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f1c9b0472855c460800000000000000
+      internalID: 7261306899817677302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_1
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 15
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0145e2f7dd2ac4330800000000000000
+      internalID: 3696508466369549328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_2
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 15
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cedf371beffd2ae0800000000000000
+      internalID: -1572319309709975865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_3
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 15
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f48befa69b0aa9e80800000000000000
+      internalID: -8171041855685871537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_4
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 15
+        width: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cdcfa82343c89950800000000000000
+      internalID: 6456124759048441283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_5
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 15
+        width: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d75f94c298f4c26c0800000000000000
+      internalID: -4166868104652393091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_6
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 15
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be62c8fadab9b5190800000000000000
+      internalID: -7972607545052485909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_7
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 15
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f397ce81ebb98340800000000000000
+      internalID: 4866627449788011510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_8
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 15
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9301a957f5a112a70800000000000000
+      internalID: 8800344144155906105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_9
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 15
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e740f1f5397805e0800000000000000
+      internalID: -1943169966611085343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_10
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 15
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f658c383e86d74780800000000000000
+      internalID: -8698748248925633169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WarriorManIdleBlock_11
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 15
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aca4cdab1bc7ddad0800000000000000
+      internalID: -2675845500802151734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      WarriorManIdleBlock_0: 7261306899817677302
+      WarriorManIdleBlock_1: 3696508466369549328
+      WarriorManIdleBlock_10: -8698748248925633169
+      WarriorManIdleBlock_11: -2675845500802151734
+      WarriorManIdleBlock_2: -1572319309709975865
+      WarriorManIdleBlock_3: -8171041855685871537
+      WarriorManIdleBlock_4: 6456124759048441283
+      WarriorManIdleBlock_5: -4166868104652393091
+      WarriorManIdleBlock_6: -7972607545052485909
+      WarriorManIdleBlock_7: 4866627449788011510
+      WarriorManIdleBlock_8: 8800344144155906105
+      WarriorManIdleBlock_9: -1943169966611085343
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
