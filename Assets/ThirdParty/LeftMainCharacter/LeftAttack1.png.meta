@@ -20,6 +20,9 @@ TextureImporter:
   - first:
       213: -263162363430926528
     second: LeftAttack1_5
+  - first:
+      213: 5537751203607673366
+    second: LeftAttack1_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -120,8 +123,8 @@ TextureImporter:
         serializedVersion: 2
         x: 2
         y: 2
-        width: 25
-        height: 31
+        width: 28
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,8 +145,8 @@ TextureImporter:
         serializedVersion: 2
         x: 75
         y: 2
-        width: 32
-        height: 31
+        width: 35
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,8 +167,8 @@ TextureImporter:
         serializedVersion: 2
         x: 153
         y: 2
-        width: 34
-        height: 31
+        width: 37
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,9 +187,9 @@ TextureImporter:
       name: LeftAttack1_3
       rect:
         serializedVersion: 2
-        x: 232
-        y: 4
-        width: 35
+        x: 233
+        y: 2
+        width: 37
         height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -206,9 +209,9 @@ TextureImporter:
       name: LeftAttack1_4
       rect:
         serializedVersion: 2
-        x: 324
-        y: 4
-        width: 22
+        x: 325
+        y: 2
+        width: 25
         height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -228,10 +231,10 @@ TextureImporter:
       name: LeftAttack1_5
       rect:
         serializedVersion: 2
-        x: 408
+        x: 410
         y: 2
         width: 31
-        height: 31
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,6 +245,28 @@ TextureImporter:
       bones: []
       spriteID: 0478279893f095cf0800000000000000
       internalID: -263162363430926528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LeftAttack1_6
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 2
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61af681216b0adc40800000000000000
+      internalID: 5537751203607673366
       vertices: []
       indices: 
       edges: []
@@ -266,6 +291,7 @@ TextureImporter:
       LeftAttack1_3: 6160499520136393731
       LeftAttack1_4: 7832315174387030523
       LeftAttack1_5: -263162363430926528
+      LeftAttack1_6: 5537751203607673366
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

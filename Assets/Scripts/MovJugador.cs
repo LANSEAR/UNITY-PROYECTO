@@ -18,6 +18,8 @@ public class MovimientoJugador : MonoBehaviour
     [Header("Ataque")]
     public string estadoAtaqueDerecha = "MainAttack";
     public string estadoAtaqueIzquierda = "LeftAttack1";
+    public string estadoAtaque2Derecha = "MainAttack2";
+    public string estadoAtaque2Izquierda = "LeftAttack2";
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -32,8 +34,11 @@ public class MovimientoJugador : MonoBehaviour
     private bool saltando;
     private bool atacando;
 
-    private int hashAtaqueActual;
+    private bool comboSolicitado;
+    private bool segundoAtaque;
     private bool ataqueIniciado;
+
+    private int hashAtaqueActual;
 
     void Start()
     {
@@ -94,42 +99,34 @@ public class MovimientoJugador : MonoBehaviour
             enSuelo && !agachado && !deslizando && !atacando)
         {
             saltando = true;
-
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
                 fuerzaSalto
             );
         }
 
-        // Ataque con clic izquierdo del ratón
-        if (Input.GetMouseButtonDown(0) && !atacando)
+        // Primer clic: iniciar ataque.
+        // Segundo clic durante el primer golpe: solicitar combo.
+        if (Input.GetMouseButtonDown(0))
         {
-            string nombreAtaque =
-                direccion < 0
-                ? estadoAtaqueIzquierda
-                : estadoAtaqueDerecha;
-
-            string rutaEstado = "Base Layer." + nombreAtaque;
-            hashAtaqueActual = Animator.StringToHash(rutaEstado);
-
-            if (animator.HasState(0, hashAtaqueActual))
+            if (atacando && !segundoAtaque)
             {
-                atacando = true;
-                ataqueIniciado = false;
-
-                animator.SetBool("Atacando", true);
-                animator.Play(hashAtaqueActual, 0, 0f);
+                comboSolicitado = true;
+                animator.SetBool("Combo", true);
             }
-            else
+            else if (!atacando)
             {
-                Debug.LogWarning(
-                    "No se encuentra el estado de ataque: "
-                    + rutaEstado
+                IniciarAtaque(
+                    direccion < 0
+                    ? estadoAtaqueIzquierda
+                    : estadoAtaqueDerecha
                 );
             }
         }
 
-        // Detectar cuándo termina el ataque
+        // Comprobar el estado y el final de la animación actual.
+
+        // Comprobar el estado y el final de la animación actual.
         if (atacando)
         {
             AnimatorStateInfo estado =
@@ -140,13 +137,24 @@ public class MovimientoJugador : MonoBehaviour
                 ataqueIniciado = true;
 
                 if (estado.normalizedTime >= 1f)
-                    TerminarAtaque();
-            }
-            else if (ataqueIniciado)
-            {
-                TerminarAtaque();
+                {
+                    if (!segundoAtaque && comboSolicitado)
+                    {
+                        string siguienteAtaque =
+                            direccion < 0
+                            ? estadoAtaque2Izquierda
+                            : estadoAtaque2Derecha;
+
+                        IniciarSegundoAtaque(siguienteAtaque);
+                    }
+                    else
+                    {
+                        TerminarAtaque();
+                    }
+                }
             }
         }
+
 
         animator.SetFloat(
             "Velocidad",
@@ -161,11 +169,65 @@ public class MovimientoJugador : MonoBehaviour
         animator.SetBool("EnSuelo", enSuelo);
     }
 
+    void IniciarAtaque(string nombreEstado)
+    {
+        int hash = Animator.StringToHash(
+            "Base Layer." + nombreEstado
+        );
+
+        if (!animator.HasState(0, hash))
+        {
+            Debug.LogWarning(
+                "No se encuentra el estado de ataque: " + nombreEstado
+            );
+            return;
+        }
+
+        atacando = true;
+        segundoAtaque = false;
+        comboSolicitado = false;
+        ataqueIniciado = false;
+        hashAtaqueActual = hash;
+
+        animator.SetBool("Atacando", true);
+        animator.SetBool("Combo", false);
+        animator.Play(hashAtaqueActual, 0, 0f);
+    }
+
+    void IniciarSegundoAtaque(string nombreEstado)
+    {
+        int hash = Animator.StringToHash(
+            "Base Layer." + nombreEstado
+        );
+
+        if (!animator.HasState(0, hash))
+        {
+            Debug.LogWarning(
+                "No se encuentra el segundo ataque: " + nombreEstado
+            );
+
+            TerminarAtaque();
+            return;
+        }
+
+        segundoAtaque = true;
+        comboSolicitado = false;
+        ataqueIniciado = false;
+        hashAtaqueActual = hash;
+
+        animator.SetBool("Combo", false);
+        animator.Play(hashAtaqueActual, 0, 0f);
+    }
+
     public void TerminarAtaque()
     {
         atacando = false;
         ataqueIniciado = false;
+        comboSolicitado = false;
+        segundoAtaque = false;
+
         animator.SetBool("Atacando", false);
+        animator.SetBool("Combo", false);
     }
 
     void FixedUpdate()
@@ -201,7 +263,6 @@ public class MovimientoJugador : MonoBehaviour
             return;
 
         Gizmos.color = Color.yellow;
-
         Gizmos.DrawWireSphere(
             comprobadorSuelo.position,
             radioSuelo
