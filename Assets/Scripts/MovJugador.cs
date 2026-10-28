@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class MovimientoJugador : MonoBehaviour
@@ -8,6 +9,7 @@ public class MovimientoJugador : MonoBehaviour
 
     [Header("Deslizamiento")]
     public float velocidadSlide = 9f;
+    public float alturaDeslizando = 0.10f;
 
     [Header("Salto")]
     public float fuerzaSalto = 10f;
@@ -15,14 +17,29 @@ public class MovimientoJugador : MonoBehaviour
     public float radioSuelo = 0.2f;
     public LayerMask capaSuelo;
 
+    [Header("Escalada")]
+    public float velocidadEscalada = 3f;
+    public LayerMask capaMuro;
+    private bool escalando = false;
+    private bool tocandoMuro = false;
+
     [Header("Ataque")]
     public string estadoAtaqueDerecha = "MainAttack";
     public string estadoAtaqueIzquierda = "LeftAttack1";
     public string estadoAtaque2Derecha = "MainAttack2";
     public string estadoAtaque2Izquierda = "LeftAttack2";
 
+    [Header("Vida")]
+    public int vidaMaxima = 3;
+    public int vidaActual;
+
     private Rigidbody2D rb;
     private Animator animator;
+    private CapsuleCollider2D colliderJugador;
+
+    private Vector2 tamanoNormal;
+    private Vector2 offsetNormal;
+    private Vector3 posicionInicial;
 
     private float movimientoHorizontal;
     private float direccion = 1f;
@@ -33,7 +50,6 @@ public class MovimientoJugador : MonoBehaviour
     private bool enSuelo;
     private bool saltando;
     private bool atacando;
-
     private bool bloqueando;
 
     private bool comboSolicitado;
@@ -46,6 +62,10 @@ public class MovimientoJugador : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        colliderJugador = GetComponent<CapsuleCollider2D>();
+
+        posicionInicial = transform.position;
+        vidaActual = vidaMaxima;
 
         if (rb == null)
             Debug.LogError("Falta Rigidbody2D en el jugador.");
@@ -55,6 +75,16 @@ public class MovimientoJugador : MonoBehaviour
 
         if (comprobadorSuelo == null)
             Debug.LogError("Asigna ComprobadorSuelo en el Inspector.");
+
+        if (colliderJugador != null)
+        {
+            tamanoNormal = colliderJugador.size;
+            offsetNormal = colliderJugador.offset;
+        }
+        else
+        {
+            Debug.LogError("Falta CapsuleCollider2D en el jugador.");
+        }
     }
 
     void Update()
@@ -86,6 +116,25 @@ public class MovimientoJugador : MonoBehaviour
 
         deslizando = corriendo && controlPulsado;
 
+        // Reducir el collider durante el deslizamiento.
+        if (colliderJugador != null)
+        {
+            if (deslizando)
+            {
+                colliderJugador.size = new Vector2(
+                    tamanoNormal.x,
+                    alturaDeslizando
+                );
+            }
+            else
+            {
+                colliderJugador.size = tamanoNormal;
+                colliderJugador.offset = offsetNormal;
+            }
+        }
+
+
+
         enSuelo = false;
 
         if (comprobadorSuelo != null)
@@ -110,8 +159,7 @@ public class MovimientoJugador : MonoBehaviour
             );
         }
 
-        // Primer clic: iniciar ataque.
-        // Segundo clic durante el primer golpe: solicitar combo.
+        // Ataque y combo.
         if (Input.GetMouseButtonDown(0))
         {
             if (atacando && !segundoAtaque)
@@ -129,9 +177,7 @@ public class MovimientoJugador : MonoBehaviour
             }
         }
 
-        // Comprobar el estado y el final de la animación actual.
-
-        // Comprobar el estado y el final de la animación actual.
+        // Comprobar el final del ataque actual.
         if (atacando)
         {
             AnimatorStateInfo estado =
@@ -159,7 +205,6 @@ public class MovimientoJugador : MonoBehaviour
                 }
             }
         }
-
 
         animator.SetFloat(
             "Velocidad",
@@ -233,6 +278,48 @@ public class MovimientoJugador : MonoBehaviour
 
         animator.SetBool("Atacando", false);
         animator.SetBool("Combo", false);
+    }
+
+    public void RecibirDano(int cantidad)
+    {
+        if (cantidad <= 0 || vidaActual <= 0)
+            return;
+
+        vidaActual = Mathf.Max(0, vidaActual - cantidad);
+
+        Debug.Log("Vida del jugador: " + vidaActual);
+
+        if (vidaActual <= 0)
+            ReiniciarJugador();
+    }
+
+    void ReiniciarJugador()
+    {
+        transform.position = posicionInicial;
+        rb.linearVelocity = Vector2.zero;
+
+        vidaActual = vidaMaxima;
+
+        atacando = false;
+        comboSolicitado = false;
+        segundoAtaque = false;
+        ataqueIniciado = false;
+        bloqueando = false;
+        saltando = false;
+
+        if (colliderJugador != null)
+        {
+            colliderJugador.size = tamanoNormal;
+            colliderJugador.offset = offsetNormal;
+        }
+
+        animator.SetBool("Atacando", false);
+        animator.SetBool("Combo", false);
+        animator.SetBool("Bloqueando", false);
+        animator.SetBool("Saltando", false);
+        animator.SetBool("Deslizando", false);
+
+        Debug.Log("Jugador reiniciado. Vida: " + vidaActual);
     }
 
     void FixedUpdate()
