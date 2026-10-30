@@ -366,6 +366,8 @@ public class MovimientoJugador : MonoBehaviour
         animator.SetBool("Saltando", false);
         animator.SetBool("Escalando", true);
 
+        animator.Play("Base Layer.MainWallClimb", 0, 0f);
+
         Debug.Log("Escalada activada.");
     }
 
@@ -381,7 +383,13 @@ public class MovimientoJugador : MonoBehaviour
         }
 
         if (animator != null)
+        {
             animator.SetBool("Escalando", false);
+            animator.SetBool("Saltando", false);
+            animator.SetBool("EnSuelo", true);
+
+            animator.Play("Base Layer.Idle", 0, 0f);
+        }
     }
 
     // INICIAR ATAQUE
