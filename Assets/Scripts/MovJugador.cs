@@ -144,6 +144,8 @@ public class MovimientoJugador : MonoBehaviour
         if (enSuelo && rb.linearVelocity.y <= 0.01f)
             saltando = false;
 
+
+
         // Gestionar la escalada.
         if (escalando)
         {
@@ -366,7 +368,7 @@ public class MovimientoJugador : MonoBehaviour
         animator.SetBool("Saltando", false);
         animator.SetBool("Escalando", true);
 
-        animator.Play("Base Layer.MainWallClimb", 0, 0f);
+        animator.Play("Base Layer.Movimiento.MainWallClimb", 0, 0f);
 
         Debug.Log("Escalada activada.");
     }
@@ -388,7 +390,7 @@ public class MovimientoJugador : MonoBehaviour
             animator.SetBool("Saltando", false);
             animator.SetBool("EnSuelo", true);
 
-            animator.Play("Base Layer.Idle", 0, 0f);
+            animator.Play("Base Layer.Movimiento.MainIdle", 0, 0f);
         }
     }
 

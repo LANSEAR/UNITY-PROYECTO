@@ -563,7 +563,7 @@ GameObject:
   - component: {fileID: 659289545}
   - component: {fileID: 659289544}
   - component: {fileID: 659289546}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ObstaculoDeslizamiento
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,8 +639,8 @@ Transform:
   m_GameObject: {fileID: 659289543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1, y: -1.65, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.1, y: -1.906, z: 0}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1198,9 +1198,13 @@ MonoBehaviour:
   capaMuro:
     serializedVersion: 2
     m_Bits: 64
+  capaSuperficieEscalada:
+    serializedVersion: 2
+    m_Bits: 72
   radioDeteccionMuro: 0.5
   alturaDeteccionMuro: 0.8
   distanciaDeteccionMuro: 0.35
+  margenBorde: 0.05
   estadoAtaqueDerecha: MainAttack
   estadoAtaqueIzquierda: LeftAttack1
   estadoAtaque2Derecha: MainAttack2
