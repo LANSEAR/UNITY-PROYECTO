@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MovimientoJugador : MonoBehaviour
 {
@@ -32,6 +33,12 @@ public class MovimientoJugador : MonoBehaviour
     public string estadoAtaqueIzquierda = "LeftAttack1";
     public string estadoAtaque2Derecha = "MainAttack2";
     public string estadoAtaque2Izquierda = "LeftAttack2";
+
+    [Header("Zona de ataque")]
+    public Transform puntoAtaque;
+    public float radioAtaque = 0.5f;
+    public int danoAtaque = 1;
+    public LayerMask capaEnemigo;
 
     [Header("Vida")]
     public int vidaMaxima = 3;
@@ -66,6 +73,8 @@ public class MovimientoJugador : MonoBehaviour
     private bool segundoAtaque;
     private bool ataqueIniciado;
 
+    private bool golpeAplicado;
+
     private int hashAtaqueActual;
 
     void Start()
@@ -87,6 +96,9 @@ public class MovimientoJugador : MonoBehaviour
 
         if (comprobadorSuelo == null)
             Debug.LogError("Asigna ComprobadorSuelo en el Inspector.");
+
+        if (puntoAtaque == null)
+            Debug.LogError("Asigna PuntoAtaque en el Inspector.");
 
         if (colliderJugador != null)
         {
@@ -143,8 +155,6 @@ public class MovimientoJugador : MonoBehaviour
 
         if (enSuelo && rb.linearVelocity.y <= 0.01f)
             saltando = false;
-
-
 
         // Gestionar la escalada.
         if (escalando)
@@ -413,6 +423,7 @@ public class MovimientoJugador : MonoBehaviour
         segundoAtaque = false;
         comboSolicitado = false;
         ataqueIniciado = false;
+        golpeAplicado = false;
         hashAtaqueActual = hash;
 
         animator.SetBool("Atacando", true);
@@ -440,10 +451,49 @@ public class MovimientoJugador : MonoBehaviour
         segundoAtaque = true;
         comboSolicitado = false;
         ataqueIniciado = false;
+        golpeAplicado = false;
         hashAtaqueActual = hash;
 
         animator.SetBool("Combo", false);
         animator.Play(hashAtaqueActual, 0, 0f);
+    }
+
+    // APLICAR DAÑO AL ENEMIGO
+    // Este método se llama desde un Animation Event.
+    public void AplicarDanoAtaque()
+    {
+        if (golpeAplicado || puntoAtaque == null)
+            return;
+
+        golpeAplicado = true;
+
+        // Calcular la posición del ataque según la dirección.
+        float posicionX = transform.position.x +
+            Mathf.Abs(puntoAtaque.localPosition.x) * direccion;
+
+        Vector2 centroAtaque = new Vector2(
+            posicionX,
+            puntoAtaque.position.y
+        );
+
+        Collider2D[] enemigosDetectados = Physics2D.OverlapCircleAll(
+            centroAtaque,
+            radioAtaque,
+            capaEnemigo
+        );
+
+        HashSet<Enemigo> enemigosGolpeados = new HashSet<Enemigo>();
+
+        foreach (Collider2D colision in enemigosDetectados)
+        {
+            Enemigo enemigo = colision.GetComponentInParent<Enemigo>();
+
+            if (enemigo != null && enemigosGolpeados.Add(enemigo))
+            {
+                enemigo.RecibirDano(danoAtaque);
+                Debug.Log("Has golpeado a un enemigo.");
+            }
+        }
     }
 
     // TERMINAR ATAQUE
@@ -453,6 +503,7 @@ public class MovimientoJugador : MonoBehaviour
         ataqueIniciado = false;
         comboSolicitado = false;
         segundoAtaque = false;
+        golpeAplicado = false;
 
         animator.SetBool("Atacando", false);
         animator.SetBool("Combo", false);
@@ -490,6 +541,7 @@ public class MovimientoJugador : MonoBehaviour
         comboSolicitado = false;
         segundoAtaque = false;
         ataqueIniciado = false;
+        golpeAplicado = false;
         bloqueando = false;
         saltando = false;
 
@@ -593,5 +645,20 @@ public class MovimientoJugador : MonoBehaviour
                 alturaDeteccionMuro
             )
         );
+
+        // Mostrar la zona de ataque.
+        if (puntoAtaque != null)
+        {
+            float posicionX = transform.position.x +
+                Mathf.Abs(puntoAtaque.localPosition.x) * direccion;
+
+            Vector2 centroAtaque = new Vector2(
+                posicionX,
+                puntoAtaque.position.y
+            );
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(centroAtaque, radioAtaque);
+        }
     }
 }
