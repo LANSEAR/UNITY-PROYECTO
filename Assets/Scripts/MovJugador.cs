@@ -28,6 +28,9 @@ public class MovimientoJugador : MonoBehaviour
     public float distanciaDeteccionMuro = 0.35f;
     public float margenBorde = 0.05f;
 
+    [Header("Escaleras")]
+    [SerializeField] private float velocidadEscalera = 2f;
+
     [Header("Ataque")]
     public string estadoAtaqueDerecha = "MainAttack";
     public string estadoAtaqueIzquierda = "LeftAttack1";
@@ -55,6 +58,7 @@ public class MovimientoJugador : MonoBehaviour
     private Vector3 posicionInicial;
 
     private float gravedadNormal;
+    private float velocidadAnimatorNormal = 1f;
     private float movimientoHorizontal;
     private float direccion = 1f;
 
@@ -69,6 +73,15 @@ public class MovimientoJugador : MonoBehaviour
     private bool escalando;
     private bool tocandoMuro;
 
+    private readonly Dictionary<Collider2D, Escalera> escalerasPorCollider =
+        new Dictionary<Collider2D, Escalera>();
+    private Escalera escaleraActual;
+    private bool enEscalera;
+    private float movimientoVerticalEscalera;
+    private bool tieneParametroEscalandoEscalera;
+
+    private const string nombreParametroEscalandoEscalera = "EscalandoEscalera";
+
     private bool comboSolicitado;
     private bool segundoAtaque;
     private bool ataqueIniciado;
@@ -82,6 +95,21 @@ public class MovimientoJugador : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         colliderJugador = GetComponent<CapsuleCollider2D>();
+
+        if (animator != null)
+        {
+            velocidadAnimatorNormal = animator.speed;
+
+            foreach (AnimatorControllerParameter parametro in animator.parameters)
+            {
+                if (parametro.name == nombreParametroEscalandoEscalera &&
+                    parametro.type == AnimatorControllerParameterType.Bool)
+                {
+                    tieneParametroEscalandoEscalera = true;
+                    break;
+                }
+            }
+        }
 
         posicionInicial = transform.position;
         vidaActual = vidaMaxima;
@@ -173,6 +201,32 @@ public class MovimientoJugador : MonoBehaviour
             return;
         }
 
+        // Mientras está en una escalera, la entrada vertical controla el ascenso.
+        if (enEscalera)
+        {
+            bool salirConEspacio = Input.GetKeyDown(KeyCode.Space);
+            bool abandonarEscalera =
+                Mathf.Abs(movimientoHorizontal) > 0.01f ||
+                salirConEspacio ||
+                Input.GetMouseButtonDown(0);
+
+            if (abandonarEscalera)
+            {
+                SalirEscalera();
+
+                if (salirConEspacio)
+                    return;
+            }
+            else
+            {
+                movimientoVerticalEscalera = Input.GetAxisRaw("Vertical");
+                ActualizarAnimacionEscalera(
+                    Mathf.Abs(movimientoVerticalEscalera) > 0.01f
+                );
+                return;
+            }
+        }
+
         corriendo =
             (Input.GetKey(KeyCode.LeftShift) ||
              Input.GetKey(KeyCode.RightShift))
@@ -189,6 +243,17 @@ public class MovimientoJugador : MonoBehaviour
             Input.GetKey(KeyCode.RightControl);
 
         deslizando = corriendo && controlPulsado;
+
+        float movimientoVertical = Input.GetAxisRaw("Vertical");
+
+        if (escaleraActual != null &&
+            !escalando && !atacando && !bloqueando && !deslizando &&
+            !Input.GetMouseButtonDown(0) &&
+            Mathf.Abs(movimientoVertical) > 0.01f)
+        {
+            IniciarEscalera(movimientoVertical);
+            return;
+        }
 
         // Reducir el collider durante el deslizamiento.
         if (colliderJugador != null)
@@ -293,10 +358,115 @@ public class MovimientoJugador : MonoBehaviour
         animator.SetBool("EnSuelo", enSuelo);
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Escalera escalera = other.GetComponentInParent<Escalera>();
+
+        if (escalera != null && !escalerasPorCollider.ContainsKey(other))
+        {
+            escalerasPorCollider.Add(other, escalera);
+
+            if (escaleraActual == null && !enEscalera)
+                escaleraActual = escalera;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!escalerasPorCollider.TryGetValue(other, out Escalera escalera))
+            return;
+
+        escalerasPorCollider.Remove(other);
+
+        if (escalera == escaleraActual ||
+            (escaleraActual == null && !enEscalera))
+        {
+            escaleraActual = ObtenerEscaleraEnContacto();
+
+            if (enEscalera && escaleraActual == null)
+                SalirEscalera();
+        }
+    }
+
+    private Escalera ObtenerEscaleraEnContacto()
+    {
+        foreach (KeyValuePair<Collider2D, Escalera> contacto in escalerasPorCollider)
+        {
+            if (contacto.Key != null && contacto.Key.enabled &&
+                contacto.Value != null && contacto.Value.isActiveAndEnabled)
+            {
+                return contacto.Value;
+            }
+        }
+
+        return null;
+    }
+
+    private void IniciarEscalera(float movimientoVertical)
+    {
+        if (rb == null || escaleraActual == null || escalando ||
+            atacando || bloqueando || deslizando ||
+            Input.GetMouseButtonDown(0))
+            return;
+
+        enEscalera = true;
+        movimientoVerticalEscalera = movimientoVertical;
+        corriendo = false;
+        agachado = false;
+        deslizando = false;
+        saltando = false;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = Vector2.zero;
+
+        ActualizarAnimacionEscalera(true);
+    }
+
+    private void SalirEscalera()
+    {
+        if (!enEscalera)
+            return;
+
+        enEscalera = false;
+        escaleraActual = null;
+        movimientoVerticalEscalera = 0f;
+
+        if (rb != null)
+        {
+            rb.gravityScale = gravedadNormal;
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        ActualizarAnimacionEscalera(false);
+    }
+
+    private void ActualizarAnimacionEscalera(bool estaEscalando)
+    {
+        if (animator == null)
+            return;
+
+        // Mantener el estado de escalera activo y pausar su pose al soltar el eje vertical.
+        if (tieneParametroEscalandoEscalera)
+            animator.SetBool(nombreParametroEscalandoEscalera, enEscalera);
+
+        animator.speed = enEscalera && !estaEscalando
+            ? 0f
+            : velocidadAnimatorNormal;
+
+        animator.SetFloat("Velocidad", 0f);
+        animator.SetBool("Corriendo", false);
+        animator.SetBool("Agachado", false);
+        animator.SetBool("Deslizando", false);
+        animator.SetBool("Saltando", false);
+        animator.SetBool("EnSuelo", enEscalera || enSuelo);
+        animator.SetBool("Bloqueando", false);
+        animator.SetBool("Atacando", false);
+        animator.SetBool("Combo", false);
+    }
+
     // INICIAR ESCALADA
     void IniciarEscalada()
     {
-        if (colliderJugador == null)
+        if (colliderJugador == null || enEscalera)
             return;
 
         Bounds limites = colliderJugador.bounds;
@@ -526,6 +696,9 @@ public class MovimientoJugador : MonoBehaviour
     // REINICIAR JUGADOR
     void ReiniciarJugador()
     {
+        SalirEscalera();
+        escaleraActual = null;
+        escalerasPorCollider.Clear();
         transform.position = posicionInicial;
 
         if (rb != null)
@@ -591,6 +764,23 @@ public class MovimientoJugador : MonoBehaviour
             }
 
             return;
+        }
+
+        if (enEscalera)
+        {
+            if (escaleraActual == null)
+            {
+                SalirEscalera();
+            }
+            else
+            {
+                rb.gravityScale = 0f;
+                rb.linearVelocity = new Vector2(
+                    0f,
+                    movimientoVerticalEscalera * velocidadEscalera
+                );
+                return;
+            }
         }
 
         float velocidadActual;
